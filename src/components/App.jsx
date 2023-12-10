@@ -22,7 +22,7 @@ export class App extends React.Component {
       <>
         <Searchbar />
         <ImageGallery imagesData={this.state.imagesData} />
-        {/* <Button /> */}
+        {<Button />}
       </>
     );
   }
