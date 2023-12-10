@@ -3,7 +3,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { Button } from './Button/Button';
 import { getPhotos } from './Api/api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-
+import s from './App.module.css';
 export class App extends React.Component {
   state = { imagesData: [], page: 1, userInpunt: '' };
 
@@ -14,7 +14,6 @@ export class App extends React.Component {
   async componentDidMount() {
     try {
       const images = await getPhotos({ per_page: 12, page: 1 });
-      console.log(images);
       this.setState({ imagesData: [...images] });
     } catch (error) {
       console.error();
@@ -35,11 +34,11 @@ export class App extends React.Component {
 
   render() {
     return (
-      <>
+      <div className={s.App}>
         <Searchbar />
         <ImageGallery imagesData={this.state.imagesData} />
         <Button buttonLoadMore={this.buttonLoadMore} />
-      </>
+      </div>
     );
   }
 }

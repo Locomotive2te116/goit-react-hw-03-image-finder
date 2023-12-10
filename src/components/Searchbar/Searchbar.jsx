@@ -1,15 +1,15 @@
 import React from 'react';
-
+import s from './Searchbar.module.css';
 export const Searchbar = () => {
   return (
-    <header className="searchbar">
-      <form className="form">
-        <button type="submit" className="button">
-          <span className="button-label">Search</span>
+    <header className={s.Searchbar}>
+      <form className={s.SearchForm}>
+        <button className={s.SearchFormButton} type="submit">
+          <span className={s.SearchFormButtonLabel}>Search</span>
         </button>
 
         <input
-          className="input"
+          className={s.SearchFormInput}
           type="text"
           placeholder="Search images and photos"
         />
