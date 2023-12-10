@@ -5,15 +5,31 @@ import { getPhotos } from './Api/api';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends React.Component {
-  state = { imagesData: [] };
+  state = { imagesData: [], page: 1, userInpunt: '' };
+
+  buttonLoadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
 
   async componentDidMount() {
     try {
-      const images = await getPhotos({ per_page: 12 });
+      const images = await getPhotos({ per_page: 12, page: 1 });
       console.log(images);
       this.setState({ imagesData: [...images] });
     } catch (error) {
       console.error();
+    }
+  }
+
+  async componentDidUpdate(_, prevState) {
+    if (prevState.page !== this.state.page) {
+      try {
+        const images = await getPhotos(this.state.userInpunt, this.state.page);
+        console.log(images);
+        this.setState({ imagesData: [...prevState.imagesData, ...images] });
+      } catch (error) {
+        console.error();
+      }
     }
   }
 
@@ -22,7 +38,7 @@ export class App extends React.Component {
       <>
         <Searchbar />
         <ImageGallery imagesData={this.state.imagesData} />
-        {<Button />}
+        <Button buttonLoadMore={this.buttonLoadMore} />
       </>
     );
   }
