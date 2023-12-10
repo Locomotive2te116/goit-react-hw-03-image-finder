@@ -6,6 +6,7 @@ export const ImageGalleryItem = ({ id, webformatURL, type, largeImageURL }) => {
       <li className="gallery-item">
         <img src={webformatURL} alt={type} id={id} />
       </li>
+      <li></li>
     </>
   );
 };
