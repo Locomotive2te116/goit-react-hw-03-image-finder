@@ -1,9 +1,14 @@
 import React from 'react';
 import s from './Searchbar.module.css';
-export const Searchbar = () => {
+export const Searchbar = ({ onSubmit }) => {
   return (
     <header className={s.Searchbar}>
-      <form className={s.SearchForm}>
+      <form
+        className={s.SearchForm}
+        onSubmit={event => {
+          onSubmit(event);
+        }}
+      >
         <button className={s.SearchFormButton} type="submit">
           <span className={s.SearchFormButtonLabel}>Search</span>
         </button>
@@ -12,6 +17,7 @@ export const Searchbar = () => {
           className={s.SearchFormInput}
           type="text"
           placeholder="Search images and photos"
+          name="userInput"
         />
       </form>
     </header>
