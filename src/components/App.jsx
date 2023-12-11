@@ -7,7 +7,14 @@ import s from './App.module.css';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 export class App extends React.Component {
-  state = { imagesData: [], page: 1, userInpunt: '', loading: false };
+  state = {
+    imagesData: [],
+    page: 1,
+    userInput: '',
+    loading: false,
+    modalImageUrl: '',
+    isModalOpen: false,
+  };
 
   buttonLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
@@ -16,7 +23,7 @@ export class App extends React.Component {
   async componentDidMount() {
     try {
       this.setState({ loading: true });
-      const images = await getPhotos(this.state.userInpunt, this.state.page);
+      const images = await getPhotos(this.state.userInput, this.state.page);
       this.setState({ imagesData: [...images] });
     } catch (error) {
       console.error();
@@ -49,14 +56,33 @@ export class App extends React.Component {
     const userInput = e.currentTarget.elements.userInput.value;
     this.setState({ userInput: userInput, page: 1, imagesData: [] });
   };
+  openModal = imgUrl => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen,
+      modalImageUrl: imgUrl,
+    }));
+  };
+
+  closeModal = () => {
+    this.setState(prevState => ({ isModalOpen: !prevState.isModalOpen }));
+  };
+
   render() {
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.onSubmit} />
-        <ImageGallery imagesData={this.state.imagesData} />
+        <ImageGallery
+          imagesData={this.state.imagesData}
+          openModal={this.openModal}
+        />
         {this.state.loading === true ? <Loader /> : null}
         <Button buttonLoadMore={this.buttonLoadMore} />
-        <Modal />
+        {this.state.isModalOpen && (
+          <Modal
+            modalImageUrl={this.state.modalImageUrl}
+            closeModal={this.closeModal}
+          />
+        )}
       </div>
     );
   }
