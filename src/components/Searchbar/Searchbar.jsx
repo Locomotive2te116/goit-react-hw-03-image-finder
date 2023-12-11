@@ -5,8 +5,8 @@ export const Searchbar = ({ onSubmit }) => {
     <header className={s.Searchbar}>
       <form
         className={s.SearchForm}
-        onSubmit={event => {
-          onSubmit(event);
+        onSubmit={() => {
+          onSubmit();
         }}
       >
         <button className={s.SearchFormButton} type="submit">
